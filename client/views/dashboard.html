@@ -1,0 +1,32 @@
+<div class="row" ng-controller="appointmentsController as Appointments">
+	<div class="row col-xs-offset-3">
+		Hi {{Appointments.user}}!  <a ng-click="Appointments.logout()">Logout</a>
+	</div>
+	<h3>Doctor's Appointments</h3>
+	<form role="form">
+		<label for="search">Search</label>
+		<input type="text" id="search" class="form-group" ng-model="data_filter" placeholder="Search...">
+	</form>
+	<table class="table-hover table-striped">
+		<thead>
+			<tr>
+				<th>Date</th>
+				<th>Time</th>
+				<th>Patient Name</th>
+				<th>Complain</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr ng-repeat="appointment in Appointments.appointments | filter:data_filter | orderBy: 'dateTime'">
+				<td ng-bind="appointment.dateTime | date:'MMM dd, yyyy'"></td>
+				<td ng-bind="appointment.dateTime | date:'h:mm a'"></td>
+				<td ng-bind="appointment.name"></td>
+				<td>
+					<p ng-bind="appointment.complaint"></p>
+					<button class="btn btn-classic" ng-if="appointment.name == Appointments.user" ng-click="Appointments.removeAppointment(appointment._id)">Cancel</button>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+	<a href="#/appointments"><button class="btn btn-default">Add New Appointment</button></a>
+</div>
